@@ -63,7 +63,6 @@
 				A2B892AC29145502009F05F0 /* ViewControllers */,
 				A249AF3D29130F9E0070AEF6 /* AppDelegate.swift */,
 				A249AF3F29130F9E0070AEF6 /* SceneDelegate.swift */,
-				A249AF4829130F9F0070AEF6 /* LaunchScreen.storyboard */,
 				A249AF4B29130F9F0070AEF6 /* Info.plist */,
 			);
 			path = Taskly;
@@ -88,6 +87,7 @@
 		A2B892AE29145561009F05F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A249AF4829130F9F0070AEF6 /* LaunchScreen.storyboard */,
 				A249AF4329130F9E0070AEF6 /* Main.storyboard */,
 				A249AF4629130F9F0070AEF6 /* Assets.xcassets */,
 			);
