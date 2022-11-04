@@ -15,6 +15,9 @@ class TasklyViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Displays large title.
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         // Adding items at the array
         let item1 = TasklyItem()
         item1.text = "Walk the dog"
@@ -38,22 +41,6 @@ class TasklyViewController: UITableViewController {
         item5.text = "Eat ice cream"
         items.append(item5)
         
-    }
-    
-    // Toggle the checkmark
-    func configureCheckmark(for cell: UITableViewCell, with item: TasklyItem) {
-        
-        if item.checked {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-    }
-    
-    // I still don't fucking understand why I write that
-    func configureText(for cell: UITableViewCell, with item: TasklyItem) {
-        let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.text
     }
     
     // MARK: - Table View Data Source
@@ -86,5 +73,49 @@ class TasklyViewController: UITableViewController {
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // Swipe to delete function
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        items.remove(at: indexPath.row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    // MARK: - Actions
+    
+    // Creates a new TasklyItem object and adds it to the data model.
+    @IBAction func addItem() {
+        let newRowIndex = items.count
+        
+        // It creates a new TasklyItem object and adds it to the end of the array.
+        let item = TasklyItem()
+        item.text = "I am a new row"
+        items.append(item)
+        
+        // We have to tell the table view about this new row so it can add a new cell for that row.
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        
+        let indexPaths = [indexPath]
+        
+        // We have to tell the table view to insert this new row.
+        tableView.insertRows(at: indexPaths, with: .automatic)
+    }
+    
+    // Toggle the checkmark
+    func configureCheckmark(for cell: UITableViewCell, with item: TasklyItem) {
+        
+        if item.checked {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+    }
+    
+    // I still don't fucking understand why I write that
+    func configureText(for cell: UITableViewCell, with item: TasklyItem) {
+        let label = cell.viewWithTag(1000) as! UILabel
+        label.text = item.text
     }
 }
