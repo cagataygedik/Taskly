@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TasklyViewController: UITableViewController {
+class TasklyViewController: UITableViewController, AddItemViewControllerDelegate {
     
     // Empty array
     var items = [TasklyItem]()
@@ -41,6 +41,30 @@ class TasklyViewController: UITableViewController {
         item5.text = "Eat ice cream"
         items.append(item5)
         
+    }
+    
+    // MARK: - Add Item ViewController Delegates
+    
+    // This function closes the AddItemScreen.
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // This function closes too AddItemScreen.
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: TasklyItem) {
+        
+        let newRowIndex = items.count
+        items.append(item)
+        
+        // We have to tell the table view about this new row so it can add a new cell for that row.
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        
+        let indexPaths = [indexPath]
+        
+        // We have to tell the table view to insert this new row.
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Table View Data Source
@@ -85,24 +109,6 @@ class TasklyViewController: UITableViewController {
     
     // MARK: - Actions
     
-    // Creates a new TasklyItem object and adds it to the data model.
-    @IBAction func addItem() {
-        let newRowIndex = items.count
-        
-        // It creates a new TasklyItem object and adds it to the end of the array.
-        let item = TasklyItem()
-        item.text = "I am a new row"
-        items.append(item)
-        
-        // We have to tell the table view about this new row so it can add a new cell for that row.
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        
-        let indexPaths = [indexPath]
-        
-        // We have to tell the table view to insert this new row.
-        tableView.insertRows(at: indexPaths, with: .automatic)
-    }
-    
     // Toggle the checkmark
     func configureCheckmark(for cell: UITableViewCell, with item: TasklyItem) {
         
@@ -117,5 +123,22 @@ class TasklyViewController: UITableViewController {
     func configureText(for cell: UITableViewCell, with item: TasklyItem) {
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
+    }
+    
+    // MARK: - Navigation
+    
+    // An object that prepares for and performs the visual transition between two view controllers.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Checking if we handling the correct segue.
+        if segue.identifier == "AddItem" {
+            
+            // We cast destination to AddItemViewController to get a reference to an object with the right type.
+            let controller = segue.destination as! AddItemViewController
+            
+            //Once we have a reference to the AddItemViewController object, you set its delegate property to self and the connection is complete. This tells AddItemViewController that from now on, the object identified as self is its delegate.
+            controller.delegate = self
+            
+        }
     }
 }

@@ -18,14 +18,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="TasklyItem" id="bNR-kg-5bb">
-                                <rect key="frame" x="0.0" y="50" width="393" height="65.666664123535156"/>
+                                <rect key="frame" x="0.0" y="50" width="393" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bNR-kg-5bb" id="kxc-Ov-ycD">
-                                    <rect key="frame" x="0.0" y="0.0" width="349" height="65.666664123535156"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmq-mI-lN1">
-                                            <rect key="frame" x="36" y="22" width="289" height="21.666666666666671"/>
+                                            <rect key="frame" x="36" y="22" width="289" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Taskly" id="Pvv-F4-q81">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bzp-gU-RK6">
                             <connections>
-                                <segue destination="n96-Lw-n6T" kind="show" id="vS3-dd-l4E"/>
+                                <segue destination="n96-Lw-n6T" kind="show" identifier="AddItem" id="vS3-dd-l4E"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
