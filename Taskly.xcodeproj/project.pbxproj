@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A218902029153E1900A4975A /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A218901F29153E1900A4975A /* AddItemViewController.swift */; };
+		A218902029153E1900A4975A /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A218901F29153E1900A4975A /* ItemDetailViewController.swift */; };
 		A249AF3E29130F9E0070AEF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249AF3D29130F9E0070AEF6 /* AppDelegate.swift */; };
 		A249AF4029130F9E0070AEF6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249AF3F29130F9E0070AEF6 /* SceneDelegate.swift */; };
 		A249AF4229130F9E0070AEF6 /* TasklyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A249AF4129130F9E0070AEF6 /* TasklyViewController.swift */; };
@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A218901F29153E1900A4975A /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
+		A218901F29153E1900A4975A /* ItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		A249AF3A29130F9E0070AEF6 /* Taskly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taskly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A249AF3D29130F9E0070AEF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A249AF3F29130F9E0070AEF6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				A249AF4129130F9E0070AEF6 /* TasklyViewController.swift */,
-				A218901F29153E1900A4975A /* AddItemViewController.swift */,
+				A218901F29153E1900A4975A /* ItemDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -168,7 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A218902029153E1900A4975A /* AddItemViewController.swift in Sources */,
+				A218902029153E1900A4975A /* ItemDetailViewController.swift in Sources */,
 				A249AF4229130F9E0070AEF6 /* TasklyViewController.swift in Sources */,
 				A249AF3E29130F9E0070AEF6 /* AppDelegate.swift in Sources */,
 				A2B892AB29144B4E009F05F0 /* TaskylItem.swift in Sources */,

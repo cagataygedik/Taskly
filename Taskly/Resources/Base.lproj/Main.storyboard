@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Taskly-->
+        <!--Taskly✍️-->
         <scene sceneID="4pi-fN-RCL">
             <objects>
                 <tableViewController id="naX-XL-myH" customClass="TasklyViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,27 +17,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="TasklyItem" id="bNR-kg-5bb">
-                                <rect key="frame" x="0.0" y="50" width="393" height="65"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="TasklyItem" id="bNR-kg-5bb">
+                                <rect key="frame" x="0.0" y="50" width="393" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bNR-kg-5bb" id="kxc-Ov-ycD">
-                                    <rect key="frame" x="0.0" y="0.0" width="349" height="65"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="330.66666666666669" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g66-2M-vOy">
+                                            <rect key="frame" x="16.000000000000004" y="8.6666666666666661" width="38.333333333333343" height="26.666666666666671"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mmq-mI-lN1">
-                                            <rect key="frame" x="36" y="22" width="289" height="21"/>
+                                            <rect key="frame" x="62.333333333333329" y="11" width="244.33333333333337" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="244.5" id="Hv9-cz-cVd"/>
+                                                <constraint firstAttribute="height" constant="21.5" id="MHM-94-Paj"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Mmq-mI-lN1" secondAttribute="bottom" constant="11" id="3Hb-2M-hYI"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Mmq-mI-lN1" secondAttribute="trailing" constant="16" id="7di-wc-Q8C"/>
-                                        <constraint firstItem="Mmq-mI-lN1" firstAttribute="leading" secondItem="kxc-Ov-ycD" secondAttribute="leadingMargin" constant="16" id="DAK-3s-RH2"/>
-                                        <constraint firstItem="Mmq-mI-lN1" firstAttribute="top" secondItem="kxc-Ov-ycD" secondAttribute="topMargin" constant="11" id="Oby-q0-kn8"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Mmq-mI-lN1" secondAttribute="bottom" constant="11" id="imL-UO-5Qn"/>
+                                        <constraint firstItem="Mmq-mI-lN1" firstAttribute="leading" secondItem="g66-2M-vOy" secondAttribute="trailing" constant="8" id="OTL-rC-L4j"/>
+                                        <constraint firstItem="g66-2M-vOy" firstAttribute="leading" secondItem="kxc-Ov-ycD" secondAttribute="leading" constant="16" id="rPm-Ee-kfD"/>
+                                        <constraint firstItem="g66-2M-vOy" firstAttribute="centerY" secondItem="Mmq-mI-lN1" secondAttribute="centerY" id="ufq-Hb-FwG"/>
+                                        <constraint firstItem="Mmq-mI-lN1" firstAttribute="top" secondItem="kxc-Ov-ycD" secondAttribute="top" constant="11" id="zF5-2o-img"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="n96-Lw-n6T" kind="show" identifier="EditItem" trigger="accessoryAction" id="NFu-uq-GeO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -45,8 +60,9 @@
                             <outlet property="delegate" destination="naX-XL-myH" id="Ovg-qS-xAN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Taskly" id="Pvv-F4-q81">
+                    <navigationItem key="navigationItem" title="Taskly✍️" id="Pvv-F4-q81">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bzp-gU-RK6">
+                            <color key="tintColor" systemColor="systemIndigoColor"/>
                             <connections>
                                 <segue destination="n96-Lw-n6T" kind="show" identifier="AddItem" id="vS3-dd-l4E"/>
                             </connections>
@@ -60,7 +76,7 @@
         <!--Add Item-->
         <scene sceneID="IfA-7I-bNF">
             <objects>
-                <tableViewController id="n96-Lw-n6T" customClass="AddItemViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="n96-Lw-n6T" customClass="ItemDetailViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="zjv-8Y-PsQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,11 +119,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Item" largeTitleDisplayMode="never" id="3SY-d7-vuC">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="9bN-70-ypO">
+                            <color key="tintColor" systemColor="systemIndigoColor"/>
                             <connections>
                                 <action selector="cancel" destination="n96-Lw-n6T" id="UNt-T6-V7q"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="qte-Nd-hvz">
+                            <color key="tintColor" systemColor="systemIndigoColor"/>
                             <connections>
                                 <action selector="done" destination="n96-Lw-n6T" id="ilc-s7-Y0H"/>
                             </connections>
@@ -141,9 +159,16 @@
             <point key="canvasLocation" x="-51.145038167938928" y="-101.40845070422536"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="NFu-uq-GeO"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" systemColor="systemIndigoColor"/>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
