@@ -8,24 +8,34 @@
 import UIKit
 
 // Any object that conforms to this protocol must implement these two methods.
-protocol AddItemViewControllerDelegate: AnyObject {
+protocol ItemDetailViewControllerDelegate: AnyObject {
     
-  //This method is for when the user presses the Cancel.
-  func addItemViewControllerDidCancel(_ controller: AddItemViewController)
-   
-  //This method is for when the user press Done.
-  func addItemViewController(_ controller: AddItemViewController,didFinishAdding item: TasklyItem)
+    // This method is for when the user presses the Cancel.
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
+    
+    // This method is for when the user press Done.
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: TasklyItem)
+    
+    // This method is for editing.
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: TasklyItem)
 }
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+
+class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
-    weak var delegate: AddItemViewControllerDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
+    var itemToEdit: TasklyItem?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text
+            doneBarButton.isEnabled = true
+        }
     }
     
     // Keyboard automatically shows up when we navigate to the screen.
@@ -38,18 +48,32 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func cancel() {
         
-        // When user taps the Cancel button, you send the addItemViewControllerDidCancel(_:) message back to delegate.
-        delegate?.addItemViewControllerDidCancel(self)
+        // When user taps the Cancel button, you send the itemDetailViewControllerDidCancel(_:) message back to delegate.
+        delegate?.itemDetailViewControllerDidCancel(self)
         // "?" tells swift not to send the message if delegate is nil.
     }
     
     @IBAction func done() {
-        let item = TasklyItem()
-        item.text = textField.text!
         
-        // When user taps the Done button, you send the addItemViewController(_:didFinishAdding:) message new TasklyItem object that has the new text string from the text field.
-        delegate?.addItemViewController(self, didFinishAdding: item)
-        // "?" tells swift not to send the message if delegate is nil.
+        /* FOR EDITING THE ITEM*/
+        
+        // This line checks whether the itemToEdit property contains an object.
+        if let item = itemToEdit {
+            
+            // If the optional is not nil, we put the text from the text field into the existing TasklyItem object and then call the new delegate method.
+            item.text = textField.text!
+            
+            delegate?.itemDetailViewController(self, didFinishEditing: item)
+            
+            /* FOR ADDING THE NEW ITEM*/
+        } else {
+            let item = TasklyItem()
+            item.text = textField.text!
+            
+            // When user taps the Done button, you send the itemDetailViewController(_:didFinishAdding:) message new TasklyItem object that has the new text string from the text field.
+            delegate?.itemDetailViewController(self, didFinishAdding: item)
+            // "?" tells swift not to send the message if delegate is nil.
+        }
     }
     
     // MARK: - Table View Delegates
@@ -75,7 +99,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         if newText.isEmpty {
             doneBarButton.isEnabled = false
             
-        //If text field is filled enable the done button
+            // If text field is filled,enable the done button.
         } else {
             doneBarButton.isEnabled = true
         }

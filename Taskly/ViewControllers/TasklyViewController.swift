@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TasklyViewController: UITableViewController, AddItemViewControllerDelegate {
+class TasklyViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     // Empty array
     var items = [TasklyItem]()
@@ -18,40 +18,41 @@ class TasklyViewController: UITableViewController, AddItemViewControllerDelegate
         // Displays large title.
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Adding items at the array
+       // Adding items at the array
         let item1 = TasklyItem()
-        item1.text = "Walk the dog"
+        item1.text = "deneme1"
         items.append(item1)
         
         let item2 = TasklyItem()
-        item2.text = "Brush my teeth"
+        item2.text = "deneme2deneme2"
         item2.checked = true
         items.append(item2)
         
         let item3 = TasklyItem()
-        item3.text = "Learn iOS development"
+        item3.text = "deneme3deneme3deneme3"
         item3.checked = true
         items.append(item3)
         
         let item4 = TasklyItem()
-        item4.text = "Soccer practice"
+        item4.text = "hello guyss"
         items.append(item4)
         
         let item5 = TasklyItem()
-        item5.text = "Eat ice cream"
+        item5.text = "turkish delight"
         items.append(item5)
+      
         
     }
     
     // MARK: - Add Item ViewController Delegates
     
     // This function closes the AddItemScreen.
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
     // This function closes too AddItemScreen.
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: TasklyItem) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: TasklyItem) {
         
         let newRowIndex = items.count
         items.append(item)
@@ -64,6 +65,19 @@ class TasklyViewController: UITableViewController, AddItemViewControllerDelegate
         // We have to tell the table view to insert this new row.
         tableView.insertRows(at: indexPaths, with: .automatic)
         
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: TasklyItem) {
+        
+        // We can use the firstIndex(of:) method to return the index of the first item from the array which matches the passed in TasklyItem.
+        if let index = items.firstIndex(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
         navigationController?.popViewController(animated: true)
     }
     
@@ -111,15 +125,17 @@ class TasklyViewController: UITableViewController, AddItemViewControllerDelegate
     
     // Toggle the checkmark
     func configureCheckmark(for cell: UITableViewCell, with item: TasklyItem) {
+        let label = cell.viewWithTag(1001) as! UILabel
         
         if item.checked {
-            cell.accessoryType = .checkmark
+            label.text = "✅"
         } else {
-            cell.accessoryType = .none
+            label.text = ""
         }
+       
     }
     
-    // I still don't fucking understand why I write that
+    // This is for configuring the text.
     func configureText(for cell: UITableViewCell, with item: TasklyItem) {
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
@@ -134,11 +150,21 @@ class TasklyViewController: UITableViewController, AddItemViewControllerDelegate
         if segue.identifier == "AddItem" {
             
             // We cast destination to AddItemViewController to get a reference to an object with the right type.
-            let controller = segue.destination as! AddItemViewController
+            let controller = segue.destination as! ItemDetailViewController
             
             //Once we have a reference to the AddItemViewController object, you set its delegate property to self and the connection is complete. This tells AddItemViewController that from now on, the object identified as self is its delegate.
             controller.delegate = self
             
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! ItemDetailViewController
+            controller.delegate = self
+            
+            // We use that UITableViewCell object to find the table view row number by looking up the corresponding index path using tableView.indexPath(for:).
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                
+                // We have the index path, you obtain the TasklyItem object to edit, and you assign this to AddItemViewController’s itemToEdit property.
+                controller.itemToEdit = items[indexPath.row]
+            }
         }
     }
 }
