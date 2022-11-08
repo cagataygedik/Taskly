@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TasklyItem {
+class TasklyItem : NSObject{
     var text = ""
     var checked = false
 }
