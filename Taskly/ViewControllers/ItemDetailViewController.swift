@@ -55,7 +55,9 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func done() {
         
-        /* FOR EDITING THE ITEM*/
+        /*
+         FOR EDITING THE ITEM
+         */
         
         // This line checks whether the itemToEdit property contains an object.
         if let item = itemToEdit {
@@ -65,7 +67,9 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             
             delegate?.itemDetailViewController(self, didFinishEditing: item)
             
-            /* FOR ADDING THE NEW ITEM*/
+            /*
+             FOR ADDING THE NEW ITEM
+             */
         } else {
             let item = TasklyItem()
             item.text = textField.text!
