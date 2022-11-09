@@ -18,30 +18,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         // Displays large title.
         navigationController?.navigationBar.prefersLargeTitles = true
         
-       // Adding items at the array
-        let item1 = TasklyItem()
-        item1.text = "deneme1"
-        items.append(item1)
-        
-        let item2 = TasklyItem()
-        item2.text = "deneme2deneme2"
-        item2.checked = true
-        items.append(item2)
-        
-        let item3 = TasklyItem()
-        item3.text = "deneme3deneme3deneme3"
-        item3.checked = true
-        items.append(item3)
-        
-        let item4 = TasklyItem()
-        item4.text = "hello guyss"
-        items.append(item4)
-        
-        let item5 = TasklyItem()
-        item5.text = "turkish delight"
-        items.append(item5)
-      
-        
+        // Load items.
+        loadChecklistItems()
     }
     
     // MARK: - Add Item ViewController Delegates
@@ -66,6 +44,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         tableView.insertRows(at: indexPaths, with: .automatic)
         
         navigationController?.popViewController(animated: true)
+        
+        saveChecklistItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: TasklyItem) {
@@ -79,6 +59,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
             }
         }
         navigationController?.popViewController(animated: true)
+        
+        saveChecklistItems()
     }
     
     // MARK: - Table View Data Source
@@ -109,6 +91,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
             
             item.checked.toggle()
             configureCheckmark(for: cell, with: item)
+            
+            saveChecklistItems()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -119,6 +103,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        
+        saveChecklistItems()
     }
     
     // MARK: - Actions
@@ -130,15 +116,69 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         if item.checked {
             label.text = "✅"
         } else {
-            label.text = ""
+            label.text = "☑️"
         }
-       
     }
     
     // This is for configuring the text.
     func configureText(for cell: UITableViewCell, with item: TasklyItem) {
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
+    }
+    
+    // Returns the full path to the Documents folder.
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    // This method uses documentsDirectory() to construct the full path to the file that will store the checklist items.
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklist.plist")
+    }
+    
+    func saveChecklistItems() {
+        
+        // We create an instance of PropertyListEncoder which will encode the "items" array, and all the "TasklyItem"'s in it.
+        let encoder = PropertyListEncoder()
+        
+        // Sets up a block of code to catch the errors.
+        do {
+            
+            // We're trying the encode items.
+            let data = try encoder.encode(items)
+            
+            // We're writing the data to a file using dataFilePath().
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+            
+            // This statement indicates the block of code to be executed if an error was thrown by any line of code in the do block.
+        } catch {
+            print("Error encoding item array: \(error.localizedDescription)")
+            
+        }
+    }
+    
+    func loadChecklistItems() {
+        
+        // We put results of dataFilePath() in a temporary constant named path.
+        let path = dataFilePath()
+        
+        // Try to load the contents of Checklist.plist into a new Data object.
+        if let data = try? Data(contentsOf: path) {
+            
+            // When app find a Checklist.plist file we'll load the entire array and its contents from the file using a PropertyListDecoder().
+            let decoder = PropertyListDecoder()
+            
+            // Sets up a block of code to catch the errors.
+            do {
+                // Load the saved data back into items using the decoder’s decode method. The decoder needs to know what type of data will be the result of the decode operation and we let it know by indicating that it will be an array of TasklyItem objects.
+                items = try decoder.decode([TasklyItem].self, from: data)
+             
+            // This statement indicates the block of code to be executed if an error was thrown by any line of code in the do block.
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
+            }
+        }
     }
     
     // MARK: - Navigation
