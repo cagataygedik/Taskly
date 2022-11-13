@@ -8,6 +8,100 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--All Lists-->
+        <scene sceneID="jGA-L9-Lgf">
+            <objects>
+                <tableViewController id="7rL-lJ-WjQ" userLabel="All Lists" customClass="AllListsViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="ZbR-dn-t1U">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="7rL-lJ-WjQ" id="wnx-wr-2EY"/>
+                            <outlet property="delegate" destination="7rL-lJ-WjQ" id="5if-TD-nZ5"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Taskly📝" id="AyN-nZ-Ijo" userLabel="Taskies">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="eaD-iq-QAr">
+                            <connections>
+                                <segue destination="6bI-ya-FCw" kind="show" identifier="AddTasklyGroup" id="Saw-9o-2pL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="naX-XL-myH" kind="show" identifier="ShowTasks" id="mEM-t5-Oco"/>
+                        <segue destination="6bI-ya-FCw" kind="show" identifier="EditTaskie" id="9cU-4q-CcH"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iKv-bM-Zyl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-184" y="-101"/>
+        </scene>
+        <!--Add Taskly📝-->
+        <scene sceneID="hyD-JH-54T">
+            <objects>
+                <tableViewController storyboardIdentifier="ListDetailViewController" id="6bI-ya-FCw" customClass="ListDetailViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="dWL-xY-aVX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="gez-7I-fgV">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="MJU-wF-BmK">
+                                        <rect key="frame" x="0.0" y="18" width="393" height="30.333333969116211"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MJU-wF-BmK" id="uto-v9-fDm">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="30.333333969116211"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name of the List" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7aR-tY-YMF" userLabel="Text Field">
+                                                    <rect key="frame" x="16" y="4" width="361" height="22.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done" destination="6bI-ya-FCw" eventType="editingDidEndOnExit" id="Z8M-4x-Vd4"/>
+                                                        <outlet property="delegate" destination="6bI-ya-FCw" id="8xy-Iq-Xhr"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="7aR-tY-YMF" secondAttribute="trailing" constant="16" id="1Pa-GC-CMO"/>
+                                                <constraint firstItem="7aR-tY-YMF" firstAttribute="top" secondItem="uto-v9-fDm" secondAttribute="top" constant="4" id="JJH-1W-Q2D"/>
+                                                <constraint firstItem="7aR-tY-YMF" firstAttribute="leading" secondItem="uto-v9-fDm" secondAttribute="leading" constant="16" id="Vve-fz-vYf"/>
+                                                <constraint firstAttribute="bottom" secondItem="7aR-tY-YMF" secondAttribute="bottom" constant="4" id="kPT-MY-b7H"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="6bI-ya-FCw" id="fEt-Nh-api"/>
+                            <outlet property="delegate" destination="6bI-ya-FCw" id="PbX-fJ-yr2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Taskly📝" largeTitleDisplayMode="never" id="zE5-qo-h1N" userLabel="Add Taskie">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bMD-kE-UNs">
+                            <connections>
+                                <action selector="cancel" destination="6bI-ya-FCw" id="O4C-np-cZA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="znj-8Y-1km">
+                            <connections>
+                                <action selector="done" destination="6bI-ya-FCw" id="Phc-dS-WXC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneBarButton" destination="znj-8Y-1km" id="z5A-5F-DBY"/>
+                        <outlet property="textField" destination="7aR-tY-YMF" id="9VM-pR-dBv"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXg-ps-VXy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-185" y="623"/>
+        </scene>
         <!--Taskly✍️-->
         <scene sceneID="4pi-fN-RCL">
             <objects>
@@ -60,7 +154,7 @@
                             <outlet property="delegate" destination="naX-XL-myH" id="Ovg-qS-xAN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Taskly✍️" id="Pvv-F4-q81">
+                    <navigationItem key="navigationItem" title="Taskly✍️" largeTitleDisplayMode="never" id="Pvv-F4-q81" userLabel="(Name of the Taskly📝)">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bzp-gU-RK6">
                             <color key="tintColor" systemColor="systemIndigoColor"/>
                             <connections>
@@ -73,7 +167,7 @@
             </objects>
             <point key="canvasLocation" x="875.57251908396938" y="-101.40845070422536"/>
         </scene>
-        <!--Add Item-->
+        <!--Add Task✍️-->
         <scene sceneID="IfA-7I-bNF">
             <objects>
                 <tableViewController id="n96-Lw-n6T" customClass="ItemDetailViewController" customModule="Taskly" customModuleProvider="target" sceneMemberID="viewController">
@@ -117,7 +211,7 @@
                             <outlet property="delegate" destination="n96-Lw-n6T" id="3iJ-fP-sKq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add Item" largeTitleDisplayMode="never" id="3SY-d7-vuC">
+                    <navigationItem key="navigationItem" title="Add Task✍️" largeTitleDisplayMode="never" id="3SY-d7-vuC">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="9bN-70-ypO">
                             <color key="tintColor" systemColor="systemIndigoColor"/>
                             <connections>
@@ -138,12 +232,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="US8-Ng-WaD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1869" y="-95"/>
+            <point key="canvasLocation" x="1868" y="-101"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZeT-aB-kYU">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zza-Px-4nA" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="zza-Px-4nA" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8Xj-b4-giQ" userLabel="Title">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -151,16 +245,17 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="naX-XL-myH" kind="relationship" relationship="rootViewController" id="oKd-Xh-hUd"/>
+                        <segue destination="7rL-lJ-WjQ" kind="relationship" relationship="rootViewController" id="WEv-Ey-f81"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kuq-dI-ZsY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-51.145038167938928" y="-101.40845070422536"/>
+            <point key="canvasLocation" x="-1253" y="-101"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NFu-uq-GeO"/>
+        <segue reference="vS3-dd-l4E"/>
+        <segue reference="9cU-4q-CcH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemIndigoColor"/>
     <resources>
