@@ -7,9 +7,12 @@
 
 import UIKit
 
-class Taskly: NSObject {
+class TasklyGroup: NSObject, Codable {
 
     var name = ""
+    
+    // This creates a new empty array that can hold TasklyItem objects and assigns it to the items property.
+    var items = [TasklyItem]()
     
     init(name: String) {
         self.name = name
