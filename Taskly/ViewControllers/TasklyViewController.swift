@@ -9,17 +9,16 @@ import UIKit
 
 class TasklyViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
-    // Empty array
-    var items = [TasklyItem]()
+    var taskly: TasklyGroup!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        navigationItem.largeTitleDisplayMode = .never
         
-        // Displays large title.
-        navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Load items.
-        loadChecklistItems()
+        
+        title = taskly.name
     }
     
     // MARK: - Add Item ViewController Delegates
@@ -32,8 +31,8 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
     // This function closes too AddItemScreen.
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: TasklyItem) {
         
-        let newRowIndex = items.count
-        items.append(item)
+        let newRowIndex = taskly.items.count
+        taskly.items.append(item)
         
         // We have to tell the table view about this new row so it can add a new cell for that row.
         let indexPath = IndexPath(row: newRowIndex, section: 0)
@@ -45,13 +44,13 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         
         navigationController?.popViewController(animated: true)
         
-        saveChecklistItems()
+        
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: TasklyItem) {
         
         // We can use the firstIndex(of:) method to return the index of the first item from the array which matches the passed in TasklyItem.
-        if let index = items.firstIndex(of: item) {
+        if let index = taskly.items.firstIndex(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             
             if let cell = tableView.cellForRow(at: indexPath) {
@@ -60,21 +59,21 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         }
         navigationController?.popViewController(animated: true)
         
-        saveChecklistItems()
+        
     }
     
     // MARK: - Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // return the actual number of items
-        return items.count
+        return taskly.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TasklyItem", for: indexPath)
         
         // Once you have that object, you can simply look at its text and checked properties and do whatever you need to do.
-        let item = items[indexPath.row]
+        let item = taskly.items[indexPath.row]
         
         configureText(for: cell, with: item)
         configureCheckmark(for: cell, with: item)
@@ -87,24 +86,22 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         if let cell = tableView.cellForRow(at: indexPath) {
             
             // Once you have that object, you can simply look at its text and checked properties and do whatever you need to do.
-            let item = items[indexPath.row]
+            let item = taskly.items[indexPath.row]
             
             item.checked.toggle()
             configureCheckmark(for: cell, with: item)
             
-            saveChecklistItems()
+            
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // Swipe to delete function
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        items.remove(at: indexPath.row)
+        taskly.items.remove(at: indexPath.row)
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
-        
-        saveChecklistItems()
     }
     
     // MARK: - Actions
@@ -124,61 +121,6 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
     func configureText(for cell: UITableViewCell, with item: TasklyItem) {
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.text
-    }
-    
-    // Returns the full path to the Documents folder.
-    func documentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    // This method uses documentsDirectory() to construct the full path to the file that will store the checklist items.
-    func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Checklist.plist")
-    }
-    
-    func saveChecklistItems() {
-        
-        // We create an instance of PropertyListEncoder which will encode the "items" array, and all the "TasklyItem"'s in it.
-        let encoder = PropertyListEncoder()
-        
-        // Sets up a block of code to catch the errors.
-        do {
-            
-            // We're trying the encode items.
-            let data = try encoder.encode(items)
-            
-            // We're writing the data to a file using dataFilePath().
-            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
-            
-            // This statement indicates the block of code to be executed if an error was thrown by any line of code in the do block.
-        } catch {
-            print("Error encoding item array: \(error.localizedDescription)")
-            
-        }
-    }
-    
-    func loadChecklistItems() {
-        
-        // We put results of dataFilePath() in a temporary constant named path.
-        let path = dataFilePath()
-        
-        // Try to load the contents of Checklist.plist into a new Data object.
-        if let data = try? Data(contentsOf: path) {
-            
-            // When app find a Checklist.plist file we'll load the entire array and its contents from the file using a PropertyListDecoder().
-            let decoder = PropertyListDecoder()
-            
-            // Sets up a block of code to catch the errors.
-            do {
-                // Load the saved data back into items using the decoder’s decode method. The decoder needs to know what type of data will be the result of the decode operation and we let it know by indicating that it will be an array of TasklyItem objects.
-                items = try decoder.decode([TasklyItem].self, from: data)
-             
-            // This statement indicates the block of code to be executed if an error was thrown by any line of code in the do block.
-            } catch {
-                print("Error decoding item array: \(error.localizedDescription)")
-            }
-        }
     }
     
     // MARK: - Navigation
@@ -203,7 +145,7 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 
                 // We have the index path, you obtain the TasklyItem object to edit, and you assign this to AddItemViewController’s itemToEdit property.
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = taskly.items[indexPath.row]
             }
         }
     }
