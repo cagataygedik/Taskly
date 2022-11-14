@@ -7,8 +7,9 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
+    // Instead of its own array, the AllListsViewController now uses this DataModel object, which it accesses through the dataModel property.
     var dataModel: DataModel!
     
     let cellIdentifier = "TasklyGroupCell"
@@ -20,6 +21,23 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         // Registers our cell identifier witht the table view so that be table view knows which cell class should be used to create a new table view cell instance when a dequeue request comes in with that cell identifier.
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    // Showing the last opened list. When we back to the app.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // First, view controller makes itself delegate for the navigation controller.
+        navigationController?.delegate = self
+        
+        // Then we checking the dataModel to see whether it has perform the segue.
+        let index = dataModel.indexOfSelectedTaskly
+        
+        // Lastly, we checking & determine whether if the index is valid and value setting is -0 or above, then the user was on the app's TasklyGroup screen before the app was terminated.
+        if index >= 0 && index < dataModel.lists.count {
+            let taskly = dataModel.lists[index]
+            performSegue(withIdentifier: "ShowTasks", sender: taskly)
+        }
     }
     
     // MARK: - List Detail View Controller Delegates
@@ -72,6 +90,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        // We storing the index of the selected row into UserDefaults under by the dataModel.
+        dataModel.indexOfSelectedTaskly = indexPath.row
+        
         // We don't have prototype cell hooked up with segue. Because our table view for this screen isn't using prototype cell. Therefore, we doing this manualy.
         let taskly = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowTasks", sender: taskly)
@@ -108,5 +129,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             controller.delegate = self
         }
     }
+    
+    // MARK: - Navigation Controller Delegates
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+       
+        // If the back button was pressed, the new view controller is AllListsViewController itself and you set the "SelectedTaskly” value in UserDefaults to -1, meaning that no TasklyGroup is currently selected.
+        if viewController === self {
+            dataModel.indexOfSelectedTaskly = -1
+        }
+    }
+    
+    /*
+     "===" means we are checking whether two variable refer to exact same object.
+     "==" means we are checking whether two variable have the same value.
+     */
 }
 
