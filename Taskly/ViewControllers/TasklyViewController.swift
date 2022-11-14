@@ -16,8 +16,6 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
     
         navigationItem.largeTitleDisplayMode = .never
         
-        
-        
         title = taskly.name
     }
     
