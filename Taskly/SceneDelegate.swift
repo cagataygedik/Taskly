@@ -13,8 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let dataModel = DataModel()
 
+    // This method finds the AllListsViewController by looking in the storyboard as before and then sets its dataModel property.
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let navigationController = window!.rootViewController as! UINavigationController
+        
+        // UINavigationController does not have "rootViewController" property of its own, so we have to look into its viewControllers array to find the AllListsViewController
         let controller = navigationController.viewControllers[0] as! AllListsViewController
         controller.dataModel = dataModel
     }
