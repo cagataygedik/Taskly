@@ -14,6 +14,7 @@
 		A249AF4529130F9E0070AEF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A249AF4329130F9E0070AEF6 /* Main.storyboard */; };
 		A249AF4729130F9F0070AEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A249AF4629130F9F0070AEF6 /* Assets.xcassets */; };
 		A249AF4A29130F9F0070AEF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A249AF4829130F9F0070AEF6 /* LaunchScreen.storyboard */; };
+		A2870AB5292368E100E05DDE /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2870AB4292368E100E05DDE /* IconPickerViewController.swift */; };
 		A295CB49291D2872006C6A48 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A295CB48291D2872006C6A48 /* AllListsViewController.swift */; };
 		A295CB4B291D2FD1006C6A48 /* TasklyGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A295CB4A291D2FD1006C6A48 /* TasklyGroup.swift */; };
 		A295CB4D291D365F006C6A48 /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A295CB4C291D365F006C6A48 /* ListDetailViewController.swift */; };
@@ -30,6 +31,7 @@
 		A249AF4429130F9E0070AEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A249AF4629130F9F0070AEF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A249AF4929130F9F0070AEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A2870AB4292368E100E05DDE /* IconPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPickerViewController.swift; sourceTree = "<group>"; };
 		A295CB48291D2872006C6A48 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		A295CB4A291D2FD1006C6A48 /* TasklyGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasklyGroup.swift; sourceTree = "<group>"; };
 		A295CB4C291D365F006C6A48 /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				A249AF4129130F9E0070AEF6 /* TasklyViewController.swift */,
 				A218901F29153E1900A4975A /* ItemDetailViewController.swift */,
 				A295CB4C291D365F006C6A48 /* ListDetailViewController.swift */,
+				A2870AB4292368E100E05DDE /* IconPickerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				A295CB49291D2872006C6A48 /* AllListsViewController.swift in Sources */,
 				A295CB4B291D2FD1006C6A48 /* TasklyGroup.swift in Sources */,
 				A2A0F307292136660029B24E /* DataModel.swift in Sources */,
+				A2870AB5292368E100E05DDE /* IconPickerViewController.swift in Sources */,
 				A218902029153E1900A4975A /* ItemDetailViewController.swift in Sources */,
 				A249AF4229130F9E0070AEF6 /* TasklyViewController.swift in Sources */,
 				A249AF3E29130F9E0070AEF6 /* AppDelegate.swift in Sources */,
