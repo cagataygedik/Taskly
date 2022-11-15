@@ -103,6 +103,5 @@ class DataModel {
             indexOfSelectedTaskly = 0
             userDefaults.set(false, forKey: "FirstTime")
         }
-    }
-     
+    }     
 }
