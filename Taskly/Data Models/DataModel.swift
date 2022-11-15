@@ -108,6 +108,8 @@ class DataModel {
         }
     }
     
+    // MARK: - Sorting
+    
     // This method is for sorting the TasklyGroups alphabetically.
     func sortTasklyGroups() {
         lists.sort { list1, list2 in
