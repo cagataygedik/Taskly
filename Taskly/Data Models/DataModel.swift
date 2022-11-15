@@ -64,6 +64,9 @@ class DataModel {
                 // Load the saved data back into lists using the decoder’s decode method. The decoder needs to know what type of data will be the result of the decode operation and we let it know by indicating that it will be an array of TasklyGroup objects.
                 lists = try decoder.decode([TasklyGroup].self, from: data)
                 
+                // We are making existing lists are also sorted in right order
+                sortTasklyGroups()
+                
                 // This statement indicates the block of code to be executed if an error was thrown by any line of code in the do block.
             } catch {
                 print("Error decoding list array: \(error.localizedDescription)")
@@ -92,7 +95,7 @@ class DataModel {
     }
     
     // This method is for first time launching the app.
-     func handleFirstTime()  {
+     func handleFirstTime() {
         let userDefaults = UserDefaults.standard
         let firstTime = userDefaults.bool(forKey: "FirstTime")
         
@@ -103,5 +106,12 @@ class DataModel {
             indexOfSelectedTaskly = 0
             userDefaults.set(false, forKey: "FirstTime")
         }
-    }     
+    }
+    
+    // This method is for sorting the TasklyGroups alphabetically.
+    func sortTasklyGroups() {
+        lists.sort { list1, list2 in
+            return list1.name.localizedStandardCompare(list2.name) == .orderedAscending
+        }
+    }
 }

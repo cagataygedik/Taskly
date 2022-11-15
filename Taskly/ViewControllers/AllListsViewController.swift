@@ -49,24 +49,19 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding taskly: TasklyGroup) {
-        let newRowIndex = dataModel.lists.count
         
         dataModel.lists.append(taskly)
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
+        dataModel.sortTasklyGroups()
+        tableView.reloadData()
         
         navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing taskly: TasklyGroup) {
-        if let index = dataModel.lists.firstIndex(of: taskly) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                cell.textLabel!.text = taskly.name
-            }
-        }
+        
+        dataModel.sortTasklyGroups()
+        tableView.reloadData()
+        
         navigationController?.popViewController(animated: true)
     }
 
