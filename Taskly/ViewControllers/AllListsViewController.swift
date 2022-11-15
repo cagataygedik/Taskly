@@ -18,9 +18,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        // Registers our cell identifier witht the table view so that be table view knows which cell class should be used to create a new table view cell instance when a dequeue request comes in with that cell identifier.
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // Showing the last opened list. When we back to the app.
@@ -39,7 +41,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             performSegue(withIdentifier: "ShowTasks", sender: taskly)
         }
     }
-    
+
     // MARK: - List Detail View Controller Delegates
     
     func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
@@ -77,11 +79,31 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     override func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        // We define a constant to hold the newly created cell.
+        let cell: UITableViewCell!
+        
+        // Then see we can dequeue a cell from table view for the given identifier.
+        if let tmp = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            
+            // If there is a cell, thewn we assign it reference to the previously declared constant.
+            cell = tmp
+        
+        // If there is no cell, then we create a new UITableViewCell instance with cell style.
+        } else {
+          cell = UITableViewCell(style: .subtitle,reuseIdentifier: cellIdentifier)
+        }
         
         let taskly = dataModel.lists[indexPath.row]
         cell.textLabel!.text = taskly.name
         cell.accessoryType = .detailDisclosureButton
+        
+        // This code shows how subtitle cell will look in different conditions.
+        let count = taskly.countUncheckedItems()
+        if taskly.items.count == 0 {
+            cell.detailTextLabel!.text = "No Items"
+        } else {
+            cell.detailTextLabel!.text = count == 0 ? "All done" : "\(count) Remaining."
+        }
         
         return cell
     }

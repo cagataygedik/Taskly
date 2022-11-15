@@ -19,4 +19,16 @@ class TasklyGroup: NSObject, Codable {
         super.init()
     }
     
+    // This method asks TasklyGroup object how many of its TasklyItem objects are still not checked.
+    func countUncheckedItems() -> Int {
+        var count = 0
+        
+        // Where not item.checked"
+        for item in items where !item.checked {
+            count += 1
+        }
+        // When the loop is over we return total value of the count.
+        return count
+    }
+    
 }
