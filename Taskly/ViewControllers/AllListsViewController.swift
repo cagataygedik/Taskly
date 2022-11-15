@@ -80,12 +80,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         // Then see we can dequeue a cell from table view for the given identifier.
         if let tmp = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
             
-            // If there is a cell, thewn we assign it reference to the previously declared constant.
+            // If there is a cell, then we assign it reference to the previously declared constant.
             cell = tmp
         
         // If there is no cell, then we create a new UITableViewCell instance with cell style.
         } else {
-          cell = UITableViewCell(style: .subtitle,reuseIdentifier: cellIdentifier)
+          cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
         
         let taskly = dataModel.lists[indexPath.row]
@@ -100,6 +100,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             cell.detailTextLabel!.text = count == 0 ? "All done" : "\(count) Remaining."
         }
         
+        // Putting icon into the tabel view cell.(TasklyGroup)
+        cell.imageView!.image = UIImage(named: taskly.iconName)
         return cell
     }
     

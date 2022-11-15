@@ -10,12 +10,14 @@ import UIKit
 class TasklyGroup: NSObject, Codable {
 
     var name = ""
+    var iconName = "Appointments"
     
     // This creates a new empty array that can hold TasklyItem objects and assigns it to the items property.
     var items = [TasklyItem]()
     
-    init(name: String) {
+    init(name: String, iconName: String = "No Icon") {
         self.name = name
+        self.iconName = iconName
         super.init()
     }
     

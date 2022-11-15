@@ -71,8 +71,8 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
              FOR ADDING THE NEW ITEM
              */
         } else {
-            let item = TasklyItem()
-            item.text = textField.text!
+            let item = TasklyItem(text: textField.text!, checked: false)
+            //item.text = textField.text!
             
             // When user taps the Done button, you send the itemDetailViewController(_:didFinishAdding:) message new TasklyItem object that has the new text string from the text field.
             delegate?.itemDetailViewController(self, didFinishAdding: item)

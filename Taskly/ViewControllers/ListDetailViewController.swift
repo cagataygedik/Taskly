@@ -21,12 +21,14 @@ protocol ListDetailViewControllerDelegate: AnyObject {
 }
 
 
-class ListDetailViewController: UITableViewController, UITextFieldDelegate {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate, IconPickerViewControllerDelegate {
+    
     @IBOutlet var textField: UITextField!
     @IBOutlet var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var iconImage: UIImageView!
     
+    var iconName = "Folder"
     weak var delegate: ListDetailViewControllerDelegate?
-    
     var tasklyGroupToEdit: TasklyGroup?
     
     override func viewDidLoad() {
@@ -36,7 +38,10 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Taskly📝 Group"
             textField.text = tasklyGroup.name
             doneBarButton.isEnabled = true
+            
+            iconName = tasklyGroup.iconName
         }
+        iconImage.image = UIImage(named: iconName)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +49,26 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
         // Pop-up keyboard.
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
+    }
+    
+    // MARK: - Icon Picker View Controller Delegate
+    
+    // This puts the name of the chosen icon into the iconName variable to remember it, and also updates the image view with the new image.
+    func iconPicker(_ picker: IconPickerViewController, didPick iconName: String) {
+        self.iconName = iconName
+        iconImage.image = UIImage(named: iconName)
+        
+        // After all we do that, we use popViewController to "pop" the IconPickerViewController off the navigation stack.
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Navigation
+        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickIcon" {
+            let controller = segue.destination as! IconPickerViewController
+            controller.delegate = self
+        }
     }
     
     //MARK: - Actions
@@ -61,11 +86,14 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
          FOR EDITING THE ITEM
          */
         
-        // This line checks whether the itemToEdit property contains an object.
+        // This line checks whether the tasklyGroupToEdit property contains an object.
         if let tasklyGroup = tasklyGroupToEdit {
             
             // If the optional is not nil, we put the text from the text field into the existing TasklyItem object and then call the new delegate method.
             tasklyGroup.name = textField.text!
+            
+            // It puts chosen icon name into TasklyGroup object when the user closes the screen.
+            tasklyGroup.iconName = iconName
             
             delegate?.listDetailViewController(self, didFinishEditing: tasklyGroup)
             
@@ -73,9 +101,11 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
              FOR ADDING THE NEW ITEM
              */
         } else {
-            let tasklyGroup = TasklyGroup(name: textField.text!)
             
-            // When user taps the Done button, you send the itemDetailViewController(_:didFinishAdding:) message new TasklyItem object that has the new text string from the text field.
+            // This method puts new textField and iconName into the TasklyGroup.
+            let tasklyGroup = TasklyGroup(name: textField.text!, iconName: iconName)
+                        
+            // When user taps the Done button, you send the itemDetailViewController(_:didFinishAdding:) message new TasklyGroup object that has the new text string from the text field.
             delegate?.listDetailViewController(self, didFinishAdding: tasklyGroup)
             // "?" tells swift not to send the message if delegate is nil.
         }
@@ -83,8 +113,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: - Table View Delegates
     
+    // With this change you can tao the "Image" cell to trigger the segue.
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        return indexPath.section == 1 ? indexPath : nil
     }
     
     // MARK: - Text Field Delegate
