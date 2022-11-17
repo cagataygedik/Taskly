@@ -75,6 +75,7 @@ class TasklyViewController: UITableViewController, ItemDetailViewControllerDeleg
         
         configureText(for: cell, with: item)
         configureCheckmark(for: cell, with: item)
+        
         return cell
     }
     

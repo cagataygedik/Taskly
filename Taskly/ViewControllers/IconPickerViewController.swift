@@ -14,7 +14,7 @@ protocol IconPickerViewControllerDelegate: AnyObject {
 class IconPickerViewController: UITableViewController {
     weak var delegate: IconPickerViewControllerDelegate?
     
-    let icons = ["No Icon", "Cleaning", "Appointments", "Food", "Folder", "Market", "Inbox", "Trips", "Sports", "Parties"]
+    let icons = ["No Icon", "Cleaning", "Work", "Food", "Folder", "Market", "Inbox", "Trips", "Sports", "Parties"]
     
     // MARK: - Table View Delegates
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

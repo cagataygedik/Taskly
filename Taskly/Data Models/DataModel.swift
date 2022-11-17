@@ -108,6 +108,15 @@ class DataModel {
         }
     }
     
+    // This method gets the current "TasklyItemID" from UserDefaults, adds 1 to it, and writes back to UserDefaults.
+    class func nextTasklyItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "TasklyItemID")
+        userDefaults.set(itemID + 1, forKey: "TasklyItemID")
+        return itemID
+    }
+    //class func allows us to call methods on an object een when you don't have a reference to that object.
+    
     // MARK: - Sorting
     
     // This method is for sorting the TasklyGroups alphabetically.
