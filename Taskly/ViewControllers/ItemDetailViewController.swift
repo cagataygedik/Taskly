@@ -24,6 +24,8 @@ protocol ItemDetailViewControllerDelegate: AnyObject {
 class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var shouldRemindSwitch: UISwitch!
+    @IBOutlet weak var datePicker: UIDatePicker!
     weak var delegate: ItemDetailViewControllerDelegate?
     var itemToEdit: TasklyItem?
     
@@ -35,6 +37,9 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Item"
             textField.text = item.text
             doneBarButton.isEnabled = true
+            
+            shouldRemindSwitch.isOn = item.shouldRemind
+            datePicker.date = item.dueDate
         }
     }
     
@@ -65,6 +70,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             // If the optional is not nil, we put the text from the text field into the existing TasklyItem object and then call the new delegate method.
             item.text = textField.text!
             
+            item.shouldRemind = shouldRemindSwitch.isOn
+            item.dueDate = datePicker.date
+            item.scheduleNotification()
+            
             delegate?.itemDetailViewController(self, didFinishEditing: item)
             
             /*
@@ -74,12 +83,27 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             let item = TasklyItem(text: textField.text!, checked: false)
             //item.text = textField.text!
             
+            item.shouldRemind = shouldRemindSwitch.isOn
+            item.dueDate = datePicker.date
+            item.scheduleNotification()
+            
             // When user taps the Done button, you send the itemDetailViewController(_:didFinishAdding:) message new TasklyItem object that has the new text string from the text field.
             delegate?.itemDetailViewController(self, didFinishAdding: item)
             // "?" tells swift not to send the message if delegate is nil.
         }
     }
     
+    @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+      textField.resignFirstResponder()
+
+      if switchControl.isOn {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) {_, _ in
+          // do nothing
+        }
+      }
+    }
+
     // MARK: - Table View Delegates
     
     // Disabled cell selection in text field.
